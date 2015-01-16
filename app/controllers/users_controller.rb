@@ -14,6 +14,11 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)    
     if @user.save
+      if @user.total
+        @user.update_attributes(deposit: 0.00, withdraw: 0.00)
+      else
+        @user.update_attributes(total: 0.00, deposit: 0.00, withdraw: 0.00)
+      end
       # @user.send_activation_email     # same as: UserMailer.account_activation(@user).deliver
       # flash[:info] = "Please check your email to activate your account."
       log_in @user
@@ -63,7 +68,7 @@ class UsersController < ApplicationController
   private
 
   	def user_params
-  	  params.require(:user).permit(:name, :email, :password, :password_confirmation)
+  	  params.require(:user).permit(:name, :email, :password, :password_confirmation, :total, :withdraw, :deposit)
   	end
 
     # Before filters

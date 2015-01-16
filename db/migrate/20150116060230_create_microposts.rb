@@ -3,8 +3,8 @@ class CreateMicroposts < ActiveRecord::Migration
     create_table :microposts do |t|
       t.text :content
       t.references :user, index: true
-      t.integer :deposit
-      t.integer :withdraw
+      t.decimal :deposit, :precision => 10, :scale => 5
+      t.decimal :withdraw, :precision => 10, :scale => 5
 
       t.timestamps null: false
     end

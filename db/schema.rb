@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150116060230) do
+ActiveRecord::Schema.define(version: 20150116073227) do
 
   create_table "microposts", force: true do |t|
     t.text     "content"
     t.integer  "user_id"
-    t.integer  "deposit"
-    t.integer  "withdraw"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.decimal  "deposit",    precision: 10, scale: 5
+    t.decimal  "withdraw",   precision: 10, scale: 5
+    t.datetime "created_at",                          null: false
+    t.datetime "updated_at",                          null: false
   end
 
   add_index "microposts", ["user_id", "created_at"], name: "index_microposts_on_user_id_and_created_at"
@@ -28,10 +28,13 @@ ActiveRecord::Schema.define(version: 20150116060230) do
   create_table "users", force: true do |t|
     t.string   "name"
     t.string   "email"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
     t.string   "password_digest"
     t.string   "remember_digest"
+    t.decimal  "total",           precision: 10, scale: 5
+    t.decimal  "deposit",         precision: 10, scale: 5
+    t.decimal  "withdraw",        precision: 10, scale: 5
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
