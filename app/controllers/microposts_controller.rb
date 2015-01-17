@@ -29,6 +29,9 @@ class MicropostsController < ApplicationController
   end
 
   def destroy
+  	current_user.update_attributes(deposit: current_user.deposit - BigDecimal(@micropost.deposit),
+  								   withdraw: current_user.withdraw - BigDecimal(@micropost.withdraw),
+  								   total: current_user.total - BigDecimal(@micropost.deposit) + BigDecimal(@micropost.withdraw))
     @micropost.destroy
     flash[:success] = "Micropost deleted"
     redirect_to request.referrer || root_url

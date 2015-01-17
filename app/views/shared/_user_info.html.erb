@@ -2,12 +2,12 @@
 <h1><%= current_user.name %></h1>
 <span><%= link_to "view my profile", current_user %></span>
 <span class="total"> 
-  	Total: <%= current_user.total %>
+  	Total: $<%= current_user.total %>
 </span>
 <span class="withdraw"> 
-  	Total Spent: <%= current_user.withdraw %>
+  	Total Spent: $<%= current_user.withdraw %>
 </span>
 <span class="deposit"> 
-  	Total Saved: <%= current_user.deposit %>
+  	Total Saved: $<%= current_user.deposit %>
 </span>
 <span><%= pluralize(current_user.microposts.count, "transaction") %></span>
