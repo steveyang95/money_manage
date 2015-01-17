@@ -10,10 +10,12 @@
   </aside>
   <div class="col-md-8">
     <% if @user.microposts.any? %>
-      <h3>Transactions (<%= @user.microposts.count %>)</h3>
-      <h3>Total (<%= @user.total %>)</h3>
-      <h3>Withdraw (<%= @user.withdraw %>)</h3>
-      <h3>Deposit (<%= @user.deposit %>)</h3>
+      <h5>Transactions (<%= @user.microposts.count %>)</h5>
+      <h5>Total ($<%= @user.total %>)</h5>
+      <h5>Total Spent ($<%= @user.withdraw %>)</h5>
+      <h5>Monthly Spent ($<%= @user.monthly_withdraw %>)</h5>
+      <h5>Total Saved ($<%= @user.deposit %>)</h5>
+      <h5>Monthly Saved ($<%= @user.monthly_deposit %>)</h5>
       <ol class="microposts">
         <%= render @microposts %>
       </ol>

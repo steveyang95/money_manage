@@ -6,9 +6,20 @@ class MicropostsController < ApplicationController
   	@micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
       flash[:success] = "Micropost created!"
-      current_user.update_attributes(deposit: deposits(@micropost.deposit), 
+      if current_user.previous_month != Date.today.month
+      	current_user.update_attributes(deposit: deposits(@micropost.deposit),
+      								   withdraw: withdrawals(@micropost.withdraw),
+      								   total: totals(@micropost.deposit, @micropost.withdraw),
+      								   previous_month: Date.today.month, 
+      								   monthly_deposit: @micropost.deposit,
+      								   monthly_withdraw: @micropost.withdraw)
+      else
+      	current_user.update_attributes(deposit: deposits(@micropost.deposit), 
       								 withdraw: withdrawals(@micropost.withdraw),
-      								 total: totals(@micropost.deposit, @micropost.withdraw)) 
+      								 total: totals(@micropost.deposit, @micropost.withdraw),
+      								 monthly_deposit: current_user.monthly_deposit + @micropost.deposit,
+      								 monthly_withdraw: current_user.monthly_withdraw + @micropost.withdraw)
+      end
       redirect_to root_url
     else
       @feed_items = []
@@ -31,7 +42,9 @@ class MicropostsController < ApplicationController
   def destroy
   	current_user.update_attributes(deposit: current_user.deposit - BigDecimal(@micropost.deposit),
   								   withdraw: current_user.withdraw - BigDecimal(@micropost.withdraw),
-  								   total: current_user.total - BigDecimal(@micropost.deposit) + BigDecimal(@micropost.withdraw))
+  								   total: current_user.total - BigDecimal(@micropost.deposit) + BigDecimal(@micropost.withdraw),
+  								   monthly_deposit: current_user.monthly_deposit - @micropost.deposit,
+  								   monthly_withdraw: current_user.monthly_withdraw - @micropost.withdraw)
     @micropost.destroy
     flash[:success] = "Micropost deleted"
     redirect_to request.referrer || root_url

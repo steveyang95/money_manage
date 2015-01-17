@@ -1,13 +1,9 @@
 <%= link_to gravatar_for(current_user, size: 50), current_user %>
 <h1><%= current_user.name %></h1>
-<span><%= link_to "view my profile", current_user %></span>
+<span><%= link_to "View Profile", current_user %></span>
+<span><%= pluralize(current_user.microposts.count, "transaction") %></span>
 <span class="total"> 
   	Total: $<%= current_user.total %>
 </span>
-<span class="withdraw"> 
-  	Total Spent: $<%= current_user.withdraw %>
-</span>
-<span class="deposit"> 
-  	Total Saved: $<%= current_user.deposit %>
-</span>
-<span><%= pluralize(current_user.microposts.count, "transaction") %></span>
+<span> To check how much you saved and spent, </span>
+<span> please go to your profile </span>
