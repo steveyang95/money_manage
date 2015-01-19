@@ -41,12 +41,14 @@
     </aside>
     <div class="col-md-8">
       <%= render 'follow_form' if logged_in? %>
-      <h5>Transactions (<%= @user.microposts.count %>)</h5>
-      <h5>Total ($<%= @user.total %>)</h5>
-      <h5>Total Withdraw ($<%= @user.withdraw %>)</h5>
-      <h5>Monthly Withdraw ($<%= @user.monthly_withdraw %>)</h5>
-      <h5>Total Deposit ($<%= @user.deposit %>)</h5>
-      <h5>Monthly Deposit ($<%= @user.monthly_deposit %>)</h5>
+      <% if current_user == @user %>
+        <h5>Transactions (<%= @user.microposts.count %>)</h5>
+        <h5>Total ($<%= @user.total %>)</h5>
+        <h5>Total Withdraw ($<%= @user.withdraw %>)</h5>
+        <h5>Monthly Withdraw ($<%= @user.monthly_withdraw %>)</h5>
+        <h5>Total Deposit ($<%= @user.deposit %>)</h5>
+        <h5>Monthly Deposit ($<%= @user.monthly_deposit %>)</h5>
+      <% end %>
       <h5> Both users must follow each other to be part of a "Family". Once both users have followed each other, each user will be able to see the other's transactions and posts. Please refresh this page after you press the button.</h5>
     </div>
   </div>
