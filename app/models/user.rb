@@ -1,5 +1,13 @@
 class User < ActiveRecord::Base
   has_many :microposts, dependent: :destroy
+  has_many :active_relationships, class_name:  "Relationship",
+                                  foreign_key: "follower_id",
+                                  dependent:   :destroy
+  has_many :passive_relationships, class_name:  "Relationship",
+                                   foreign_key: "followed_id",
+                                   dependent:   :destroy
+  has_many :following, through: :active_relationships, source: :followed
+  has_many :followers, through: :passive_relationships, source: :follower
 
   attr_accessor :remember_token
   before_save   :downcase_email
@@ -42,9 +50,56 @@ class User < ActiveRecord::Base
   end
 
   # Defines a proto-feed.
-  # See "Following users" for the full implementation.
+  # Returns a user's status feed.
   def feed
-    Micropost.where("user_id = ?", id)
+    # ONLY CURRENT_USER MICROPOSTS
+    Micropost.where("user_id = :user_id", user_id: id)
+
+    # HAS EVERYONE FOLLOWING ID
+    # following_ids = "SELECT followed_id FROM relationships
+    #                  WHERE  follower_id = :user_id"
+    # Micropost.where("user_id IN (#{following_ids})
+    #                  OR user_id = :user_id", user_id: id)
+
+    # TRIED TO FILTER USER_ID WITH MUTUAL FOLLOWERS' ID
+    # other_following_ids = "SELECT follower_id FROM relationships
+    #                       WHERE  followed_id = :user_id"
+    # current_following_ids = "SELECT followed_id FROM relationships
+    #                          WHERE  follower_id = :user_id"
+    # current_following_ids = current_following_ids.split(",").map(&:to_i) 
+    # other_following_ids = other_following_ids.split(",").map(&:to_i)                   
+    # following_ids = []
+    # other_following_ids.each do |i|
+    #   current_following_ids.each do |j|
+    #     if i == j
+    #       following_ids << i
+    #     end
+    #   end
+    # end
+
+    # following_ids = following_ids.map(&:to_s).join(', ')
+
+    # Micropost.where("user_id IN (#{following_ids})
+    #                  OR user_id = :user_id", user_id: id)
+  end
+
+  # Follows a user.
+  def follow(other_user)
+    active_relationships.create(followed_id: other_user.id)
+  end
+
+  # Unfollows a user.
+  def unfollow(other_user)
+    active_relationships.find_by(followed_id: other_user.id).destroy
+  end
+
+  # If both sides are waiting, then follow. Think about this
+  def waiting?(other_user)
+  end
+
+  # Returns true if the current user is following the other user.
+  def following?(other_user)
+    following.include?(other_user)
   end
 
   private
@@ -52,15 +107,5 @@ class User < ActiveRecord::Base
     # Converts email to all lower-case.
     def downcase_email
       self.email = email.downcase
-    end
-
-    # Before filters
-
-    # Confirms a logged-in user.
-    def logged_in_user
-      unless logged_in?
-        flash[:danger] = "Please log in."
-        redirect_to login_url
-      end
     end
 end

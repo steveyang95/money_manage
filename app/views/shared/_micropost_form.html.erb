@@ -1,13 +1,13 @@
 <%= form_for(@micropost) do |f| %>
   <%= render 'shared/error_messages', object: f.object %>
   <div class="field">
-    <%= f.text_area :content, placeholder: "Compose new micropost..." %>
+    <%= f.text_area :content, placeholder: "What is this transaction about..." %>
   </div>
   <div class="field">
-    <%= f.text_field :deposit, placeholder: "Saved: Input only positive numbers, e.g. 0.00" %>
+    <%= f.text_field :deposit, placeholder: "Deposited: Input only positive numbers, e.g. 0.00" %>
   </div>
   <div class="field">
-    <%= f.text_field :withdraw, placeholder: "Spent: Input only positive numbers, e.g. 0.00" %>
+    <%= f.text_field :withdraw, placeholder: "Withdrawn: Input only positive numbers, e.g. 0.00" %>
   </div>
   <%= f.submit "Post", class: "btn btn-primary" %>
 <% end %>
