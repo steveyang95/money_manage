@@ -22,6 +22,7 @@
         <h5>Monthly Withdraw ($<%= @user.monthly_withdraw %>)</h5>
         <h5>Total Deposit ($<%= @user.deposit %>)</h5>
         <h5>Monthly Deposit ($<%= @user.monthly_deposit %>)</h5>
+        
         <ol class="microposts">
           <%= render @microposts %>
         </ol>
@@ -48,8 +49,14 @@
         <h5>Monthly Withdraw ($<%= @user.monthly_withdraw %>)</h5>
         <h5>Total Deposit ($<%= @user.deposit %>)</h5>
         <h5>Monthly Deposit ($<%= @user.monthly_deposit %>)</h5>
+        
+        
+        <h5> Both users must follow each other to be part of a "Family". Once both users have followed each other, each user will be able to see the other's transactions and posts. Please refresh this page after you press the button.</h5>
+        <ol class="microposts">
+            <%= render @microposts %>
+          </ol>
+          <%= will_paginate @microposts %>
       <% end %>
-      <h5> Both users must follow each other to be part of a "Family". Once both users have followed each other, each user will be able to see the other's transactions and posts. Please refresh this page after you press the button.</h5>
     </div>
   </div>
 <% end %>

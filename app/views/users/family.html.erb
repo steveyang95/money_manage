@@ -1,5 +1,5 @@
-<% provide(:title, 'All users') %>
-<h1>All users</h1>
+<% provide(:title, 'Family Members') %>
+<h1>Family Members</h1>
 
 <%= search_form_for @search do |f| %>
   <div class="field">
@@ -11,8 +11,8 @@
 
 <%= will_paginate %>
 
-<ul class="users">
-  <%= render @users %>
+<ul class="family">
+  <%= render @family %>
 </ul>
 
 <%= will_paginate %>

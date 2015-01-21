@@ -4,12 +4,22 @@ class UsersController < ApplicationController
   before_action :correct_user,   only: [:edit, :update]
 
   def index
-    @users = User.paginate(page: params[:page])
+    @search = User.search(params[:q])
+    @users = @search.result.page(params[:page])
   end
+
+  # def family
+  #   @other_user = Relationship.followed
+  #   if current_user.mutual?(@other_user)
+  #     @family = current_user.find(params[:followed_id])
+  #   end
+  # end
 
   def show
   	@user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
+    @search_microposts = @user.microposts.search(params[:q])
+    @microposts = @search_microposts.result.page(params[:page])
+    # @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new

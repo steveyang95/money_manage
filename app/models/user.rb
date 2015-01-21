@@ -94,7 +94,8 @@ class User < ActiveRecord::Base
   end
 
   # If both sides are waiting, then follow. Think about this
-  def waiting?(other_user)
+  def mutual?(other_user)
+    self.following?(other_user) && other_user.following?(self)
   end
 
   # Returns true if the current user is following the other user.

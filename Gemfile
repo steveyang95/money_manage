@@ -35,6 +35,9 @@ gem 'faker', '1.4.2'
 gem 'will_paginate',           '3.0.7'
 gem 'bootstrap-will_paginate', '0.0.10'
 
+# Search Bar.
+gem 'ransack'
+
 # More info: https://www.railstutorial.org/book/user_microposts#sec-basic_image_upload
 # Upload Images; adds a Rails generate for creating an image uploader
 # gem 'carrierwave',             '0.10.0'
