@@ -1,18 +1,6 @@
 <% provide(:title, 'Family Members') %>
 <h1>Family Members</h1>
 
-<%= search_form_for @search do |f| %>
-  <div class="field">
-    <%= f.label :name_cont, "Name" %>
-    <%= f.text_field :name_cont %>
-  </div>
-  <div class="actions"><%= f.submit "Search" %></div>
-<% end %>
-
-<%= will_paginate %>
-
-<ul class="family">
-  <%= render @family %>
+<ul class="users">
+  <%= render @users %>
 </ul>
-
-<%= will_paginate %>

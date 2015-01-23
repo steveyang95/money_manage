@@ -8,18 +8,19 @@ class UsersController < ApplicationController
     @users = @search.result.page(params[:page])
   end
 
-  # def family
-  #   @other_user = Relationship.followed
-  #   if current_user.mutual?(@other_user)
-  #     @family = current_user.find(params[:followed_id])
-  #   end
-  # end
+  def family
+    @family = []
+    for other_user in current_user.following
+      if current_user.mutual?(other_user)
+        @family.append(other_user)
+      end
+    end
+    @users = @family
+  end
 
   def show
   	@user = User.find(params[:id])
-    @search_microposts = @user.microposts.search(params[:q])
-    @microposts = @search_microposts.result.page(params[:page])
-    # @microposts = @user.microposts.paginate(page: params[:page])
+    @microposts = @user.microposts.paginate(page: params[:page])
   end
 
   def new
