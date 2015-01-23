@@ -14,7 +14,7 @@
     </aside>
     <div class="col-md-8">
       <%= render 'follow_form' if logged_in? %>
-      <h5>Please refresh this page after you press the button.</h5>
+      <h5>Please refresh this page after you press the button. Any transactions made by <%= @user.name %> will be shown below.</h5>
       <% if @user.microposts.any? %>
         <h5>Transactions (<%= @user.microposts.count %>)</h5>
         <h5>Total ($<%= @user.total %>)</h5>
