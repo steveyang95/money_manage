@@ -82,6 +82,22 @@ class UsersController < ApplicationController
     render 'show_follow'
   end
 
+  def reset
+    if current_user.update_attributes(deposit: 0.00,
+                                      withdraw: 0.00,
+                                      total: 0.00,
+                                      monthly_deposit: 0.00,
+                                      monthly_withdraw: 0.00)
+      current_user.microposts.each do |i|
+        i.destroy
+      end
+      flash[:success] = "Transactions and Money Amounts Reset"
+      redirect_to request.referrer || root_url
+    else
+      render root_url
+    end
+  end
+
   private
 
   	def user_params

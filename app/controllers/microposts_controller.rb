@@ -1,11 +1,11 @@
 class MicropostsController < ApplicationController
   before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  before_action :correct_user,   only: [:destroy]
 
   def create
   	@micropost = current_user.microposts.build(micropost_params)
     if @micropost.save
-      flash[:success] = "Micropost created!"
+      flash[:success] = "Transaction created!"
       if current_user.previous_month != Date.today.month
       	current_user.update_attributes(deposit: deposits(@micropost.deposit),
       								   withdraw: withdrawals(@micropost.withdraw),
@@ -46,7 +46,7 @@ class MicropostsController < ApplicationController
   								   monthly_deposit: current_user.monthly_deposit - @micropost.deposit,
   								   monthly_withdraw: current_user.monthly_withdraw - @micropost.withdraw)
     @micropost.destroy
-    flash[:success] = "Micropost deleted"
+    flash[:success] = "Transaction deleted"
     redirect_to request.referrer || root_url
   end
 
